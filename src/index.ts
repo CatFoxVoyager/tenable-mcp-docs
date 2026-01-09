@@ -18,6 +18,7 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { searchDocs } from './tools/search.js';
 import { readPage } from './tools/read.js';
+import { initializeIndex } from './utils/indexer.js';
 import {
   TenableMCPError,
   ValidationError,
@@ -37,6 +38,11 @@ const SERVER_NAME = 'tenable-docs-mcp';
  * Create and configure the MCP server
  */
 async function createServer(): Promise<Server> {
+  // Initialize search index before starting server
+  console.error('Initializing Tenable documentation index...');
+  await initializeIndex();
+  console.error('Index initialization complete');
+
   const server = new Server(
     {
       name: SERVER_NAME,

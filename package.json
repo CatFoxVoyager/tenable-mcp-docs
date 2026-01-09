@@ -1,7 +1,7 @@
 {
-  "name": "tenable-docs-mcp",
+  "name": "tenable-api-mcp",
   "version": "1.0.1",
-  "description": "MCP server for retrieving Tenable documentation to assist with script generation",
+  "description": "MCP server for retrieving Tenable API documentation to assist with script generation",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
@@ -15,10 +15,29 @@
     "model-context-protocol",
     "tenable",
     "documentation",
-    "api"
+    "api",
+    "tenable-io",
+    "vulnerability-management"
   ],
-  "author": "",
+  "author": "tenable-api-mcp",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tenable-api-mcp/tenable-api-mcp.git"
+  },
+  "homepage": "https://github.com/tenable-api-mcp/tenable-api-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/tenable-api-mcp/tenable-api-mcp/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4",
     "axios": "^1.7.9",
@@ -31,6 +50,6 @@
     "typescript": "^5.7.2"
   },
   "bin": {
-    "tenable-docs-mcp": "bin/tenable-docs-mcp"
+    "tenable-api-mcp": "bin/tenable-api-mcp"
   }
 }
