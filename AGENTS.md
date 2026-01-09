@@ -4,7 +4,7 @@ This document helps future agents work effectively in this repository.
 
 ## Project Overview
 
-**tenable-docs-mcp** is a Model Context Protocol (MCP) server for retrieving Tenable documentation. It serves as an interface between an LLM and the Tenable Developer documentation site (https://developer.tenable.com/).
+**tenable-api-mcp** is a Model Context Protocol (MCP) server for retrieving Tenable API documentation. It serves as an interface between an LLM and Tenable Developer documentation site (https://developer.tenable.com/).
 
 **Purpose**: Enable AI assistants to retrieve and process technical documentation to help users generate scripts and understand Tenable APIs.
 
@@ -42,7 +42,7 @@ npm run watch
 ## Project Structure
 
 ```
-tenable-mcp-docs/
+tenable-api-mcp/
 ├── src/
 │   ├── index.ts           # Main MCP server entry point
 │   ├── tools/
@@ -101,7 +101,7 @@ All tools return structured error responses with `code`, `message`, and `details
 
 2. **Cache Performance**: The `read_page` tool uses an LRU cache (100 entries max, 24h TTL). Cache hits return in ~5ms vs ~2-4s for fresh downloads. Expect 90-95% cache hit rate for typical usage.
 
-3. **404 Fallbacks**: When a page returns 404, the tool provides helpful suggestions including a link to the main API reference, navigation suggestions, and a list of common endpoints.
+3. **404 Fallbacks**: When a page returns 404, tool provides helpful suggestions including a link to the main API reference, navigation suggestions, and a list of common endpoints.
 
 4. **Index Initialization**: Server indexes 629+ entries at startup (takes 5-10 seconds). This is a one-time operation at server start. Check stderr logs for indexing progress.
 
@@ -109,7 +109,7 @@ All tools return structured error responses with `code`, `message`, and `details
 
 6. **Domain Restriction**: The `read_page` tool only accepts URLs from Tenable documentation domains. This is a security measure.
 
-7. **TypeScript Compilation**: Always run `npm run build` before testing. The server runs from `dist/index.js`, not the source files.
+7. **TypeScript Compilation**: Always run `npm run build` before testing. The server runs from `dist/index.js`, not from source files.
 
 8. **Error Output**: Errors are sent to `stderr` (via `console.error`) for MCP protocol compliance. Startup messages only appear if `DEBUG` environment variable is set.
 
@@ -139,9 +139,9 @@ Add to Claude Desktop config file:
 ```json
 {
   "mcpServers": {
-    "tenable-docs": {
+    "tenable-api": {
       "command": "node",
-      "args": ["D:/code/tenable-mcp-docs/dist/index.js"]
+      "args": ["D:/code/tenable-api-mcp/dist/index.js"]
     }
   }
 }
@@ -185,7 +185,7 @@ Verify:
 
 ### Tools Not Appearing in Claude Desktop
 
-1. Verify path in config points to `dist/index.js` (NOT `src/index.ts`)
+1. Verify the path in config points to `dist/index.js` (NOT `src/index.ts`)
 2. Restart Claude Desktop after config change
 3. Check Claude Desktop logs for errors
 
@@ -218,7 +218,7 @@ When adding new tools:
 Currently, the project doesn't have automated tests. When adding tests:
 
 1. Use a testing framework like Jest or Vitest
-2. Test tool logic independently of MCP server
+2. Test tool logic independently of the MCP server
 3. Mock HTTP requests for scraper tests
 4. Mock HTML content for converter tests
 5. Add test script to `package.json`
@@ -275,7 +275,7 @@ All configured to produce clean, readable Markdown.
 
 Documentation indexer that scrapes Tenable documentation at startup:
 
-- **`initializeIndex()`**: Build and populate the search index
+- **`initializeIndex()`**: Build and populate search index
 - **`search(query)`**: Search indexed documentation by keywords
 - **`getAllEntries()`**: Get all indexed entries
 - **`getEntriesByCategory(category)`**: Filter entries by category
